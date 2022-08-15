@@ -14,21 +14,18 @@ on:
       - master
 jobs:
   ngsast-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
-    - name: Download the ShiftLeft CLI and set permissions
+    - name: Download ShiftLeft CLI
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
-
-    # ShiftLeft requires Java 1.8
-    - name: Set up Java
+    # ShiftLeft requires Java 1.8 only for java analysis, 11 is recommended otherwise.
+    - name: Setup Java JDK
       uses: actions/setup-java@v1.4.3
       with:
-        java-version: 1.8
-
-    - name: Analyze application with ShiftLeft
-      run: ${GITHUB_WORKSPACE}/sl analyze --app ShiftLeftJS --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js $(pwd)
+        java-version: 11
+    - name: NextGen Static Analysis
+      run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app ShiftleftKotlin --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --kotlin .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
