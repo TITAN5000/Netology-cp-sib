@@ -28,7 +28,11 @@ jobs:
       with:
         java-version: 1.8
 
-    - name: Analyze application with ShiftLeft
-      run: ${GITHUB_WORKSPACE}/sl analyze --app ShiftLeftJS --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js $(pwd)
+    - name: Package with Maven
+      run: mvn clean package
+
+    - name: NextGen Static Analysis
+      run: ${GITHUB_WORKSPACE}/sl analyze --app ShiftLeftJava --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --vcs-prefix-correction "io/shiftleft=src/main/java/" --java $(pwd)/target/yourJarFileName.jar
+
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
