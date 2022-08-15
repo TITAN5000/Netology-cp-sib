@@ -1,4 +1,7 @@
 # Netology-cp-sib
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/67624e1f68284968983fdc534e0b80e3)](https://app.codacy.com/gh/TITAN5000/Netology-cp-sib?utm_source=github.com&utm_medium=referral&utm_content=TITAN5000/Netology-cp-sib&utm_campaign=Badge_Grade_Settings)
+
 Веб-приложение в сфере электронной коммерции Necommerce (Аудит безопасноти)
 
 Легенда
